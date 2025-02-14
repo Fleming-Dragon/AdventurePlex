@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
-import { categories } from '../data/categories';
-import { activities } from '../data/activities';
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { categories } from "../data/categories";
+import { activities } from "../data/activities";
 
 export default function Home() {
   const featuredActivities = activities.slice(0, 4);
@@ -23,14 +23,15 @@ export default function Home() {
             Your Ultimate Adventure Awaits
           </h1>
           <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white">
-            Discover a world of excitement with our diverse range of sports, adventures, and entertainment activities.
+            Discover a world of excitement with our diverse range of sports,
+            adventures, and entertainment activities.
           </p>
           <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
             <Link
               to="/book"
               className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 sm:px-8"
             >
-              Book Now
+              Explore Now
             </Link>
           </div>
         </div>
@@ -63,8 +64,12 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/0" />
               </div>
               <div className="absolute bottom-0 p-6">
-                <h3 className="text-xl font-bold text-white">{category.name}</h3>
-                <p className="mt-2 text-sm text-gray-200">{category.description}</p>
+                <h3 className="text-xl font-bold text-white">
+                  {category.name}
+                </h3>
+                <p className="mt-2 text-sm text-gray-200">
+                  {category.description}
+                </p>
                 <div className="mt-4 flex items-center text-white">
                   <span className="text-sm font-medium">Explore</span>
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -101,8 +106,12 @@ export default function Home() {
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900">{activity.name}</h3>
-                  <p className="mt-2 text-sm text-gray-500">{activity.description}</p>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {activity.name}
+                  </h3>
+                  <p className="mt-2 text-sm text-gray-500">
+                    {activity.description}
+                  </p>
                   <div className="mt-4 flex items-center justify-between">
                     <span className="text-lg font-medium text-indigo-600">
                       ${activity.price}

@@ -1,30 +1,45 @@
-import { useState } from 'react';
-import { format } from 'date-fns';
-import { Search } from 'lucide-react';
-import { activities } from '../data/activities';
-import { categories } from '../data/categories';
-import type { Activity } from '../types';
+import { useState } from "react";
+import { format } from "date-fns";
+import { Search } from "lucide-react";
+import { Link } from "react-router-dom";
+import { activities } from "../data/activities";
+import { categories } from "../data/categories";
+import type { Activity } from "../types";
 
 const timeSlots = [
-  '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
-  '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM',
-  '05:00 PM', '06:00 PM', '07:00 PM', '08:00 PM',
+  "09:00 AM",
+  "10:00 AM",
+  "11:00 AM",
+  "12:00 PM",
+  "01:00 PM",
+  "02:00 PM",
+  "03:00 PM",
+  "04:00 PM",
+  "05:00 PM",
+  "06:00 PM",
+  "07:00 PM",
+  "08:00 PM",
 ];
 
 export default function Book() {
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string>(
-    format(new Date(), 'yyyy-MM-dd')
+  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
+    null
   );
-  const [selectedTime, setSelectedTime] = useState<string>('');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState<string>(
+    format(new Date(), "yyyy-MM-dd")
+  );
+  const [selectedTime, setSelectedTime] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [participants, setParticipants] = useState(1);
 
   const filteredActivities = activities.filter((activity) => {
-    const matchesSearch = activity.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch =
+      activity.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       activity.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory ? activity.category === selectedCategory : true;
+    const matchesCategory = selectedCategory
+      ? activity.category === selectedCategory
+      : true;
     return matchesSearch && matchesCategory;
   });
 
@@ -41,8 +56,8 @@ export default function Book() {
     };
 
     // Handle booking submission
-    console.log('Booking:', booking);
-    alert('Booking submitted successfully!');
+    console.log("Booking:", booking);
+    alert("Booking submitted successfully!");
   };
 
   return (
@@ -62,7 +77,7 @@ export default function Book() {
           <div className="lg:w-1/4">
             <div className="rounded-lg bg-white p-6 shadow">
               <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
-              
+
               {/* Search */}
               <div className="mt-4">
                 <label htmlFor="search" className="sr-only">
@@ -83,14 +98,17 @@ export default function Book() {
 
               {/* Category filter */}
               <div className="mt-6">
-                <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="category"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Category
                 </label>
                 <select
                   id="category"
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus :ring-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 >
                   <option value="">All Categories</option>
                   {categories.map((category) => (
@@ -112,30 +130,44 @@ export default function Book() {
                     key={activity.id}
                     className={`cursor-pointer rounded-lg border-2 bg-white p-4 ${
                       selectedActivity?.id === activity.id
-                        ? 'border-indigo-600 bg-indigo-50'
-                        : 'border-gray-200 hover:border-indigo-200'
+                        ? "border-indigo-600 bg-indigo-50"
+                        : "border-gray-200 hover:border-indigo-200"
                     }`}
-                    onClick={() => setSelectedActivity(activity)}
                   >
-                    <img
-                      src={activity.image}
-                      alt={activity.name}
-                      className="h-32 w-full rounded-lg object-cover"
-                    />
-                    <h3 className="mt-4 text-lg font-medium text-gray-900">
-                      {activity.name}
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-500">{activity.description}</p>
-                    <dl className="mt-4 grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <dt className="font-medium text-gray-500">Duration</dt>
-                        <dd className="text-gray-900">{activity.duration} min</dd>
-                      </div>
-                      <div>
-                        <dt className="font-medium text-gray-500">Price</dt>
-                        <dd className="text-gray-900">${activity.price}</dd>
-                      </div>
-                    </dl>
+                    <Link to={`/activity/${activity.id}`} className="block">
+                      <img
+                        src={activity.image}
+                        alt={activity.name}
+                        className="h-32 w-full rounded-lg object-cover"
+                      />
+                      <h3 className="mt-4 text-lg font-medium text-gray-900">
+                        {activity.name}
+                      </h3>
+                      <p className="mt-1 text-sm text-gray-500">
+                        {activity.description}
+                      </p>
+                      <dl className="mt-4 grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <dt className="font-medium text-gray-500">
+                            Duration
+                          </dt>
+                          <dd className="text-gray-900">
+                            {activity.duration} min
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className="font-medium text-gray-500">Price</dt>
+                          <dd className="text-gray-900">${activity.price}</dd>
+                        </div>
+                      </dl>
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedActivity(activity)}
+                      className="mt-4 w-full rounded-md bg-indigo-50 px-3.5 py-2 text-sm font-semibold text-indigo-600 hover:bg-indigo-100"
+                    >
+                      Select for Booking
+                    </button>
                   </div>
                 ))}
               </div>
@@ -158,7 +190,7 @@ export default function Book() {
                         name="date"
                         value={selectedDate}
                         onChange={(e) => setSelectedDate(e.target.value)}
-                        min={format(new Date(), 'yyyy-MM-dd')}
+                        min={format(new Date(), "yyyy-MM-dd")}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         required
                       />
@@ -177,7 +209,17 @@ export default function Book() {
                         id="participants"
                         name="participants"
                         value={participants}
-                        onChange={(e) => setParticipants(Math.max(1, Math.min(parseInt(e.target.value) || 1, selectedActivity.maxParticipants)))}
+                        onChange={(e) =>
+                          setParticipants(
+                            Math.max(
+                              1,
+                              Math.min(
+                                parseInt(e.target.value) || 1,
+                                selectedActivity.maxParticipants
+                              )
+                            )
+                          )
+                        }
                         min="1"
                         max={selectedActivity.maxParticipants}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -202,8 +244,8 @@ export default function Book() {
                           onClick={() => setSelectedTime(time)}
                           className={`rounded-md px-3 py-2 text-sm font-semibold ${
                             selectedTime === time
-                              ? 'bg-indigo-600 text-white'
-                              : 'bg-white text-gray-900 hover:bg-gray-50'
+                              ? "bg-indigo-600 text-white"
+                              : "bg-white text-gray-900 hover:bg-gray-50"
                           } shadow-sm ring-1 ring-inset ring-gray-300`}
                         >
                           {time}
@@ -214,7 +256,9 @@ export default function Book() {
 
                   {/* Booking Summary */}
                   <div className="rounded-lg bg-gray-50 p-6">
-                    <h3 className="text-lg font-medium text-gray-900">Booking Summary</h3>
+                    <h3 className="text-lg font-medium text-gray-900">
+                      Booking Summary
+                    </h3>
                     <dl className="mt-4 space-y-4">
                       <div className="flex justify-between">
                         <dt className="text-sm text-gray-600">Activity</dt>
@@ -224,18 +268,26 @@ export default function Book() {
                       </div>
                       <div className="flex justify-between">
                         <dt className="text-sm text-gray-600">Date</dt>
-                        <dd className="text-sm font-medium text-gray-900">{selectedDate}</dd>
+                        <dd className="text-sm font-medium text-gray-900">
+                          {selectedDate}
+                        </dd>
                       </div>
                       <div className="flex justify-between">
                         <dt className="text-sm text-gray-600">Time</dt>
-                        <dd className="text-sm font-medium text-gray-900">{selectedTime}</dd>
+                        <dd className="text-sm font-medium text-gray-900">
+                          {selectedTime}
+                        </dd>
                       </div>
                       <div className="flex justify-between">
                         <dt className="text-sm text-gray-600">Participants</dt>
-                        <dd className="text-sm font-medium text-gray-900">{participants}</dd>
+                        <dd className="text-sm font-medium text-gray-900">
+                          {participants}
+                        </dd>
                       </div>
                       <div className="flex justify-between border-t border-gray-200 pt-4">
-                        <dt className="text-base font-medium text-gray-900">Total Price</dt>
+                        <dt className="text-base font-medium text-gray-900">
+                          Total Price
+                        </dt>
                         <dd className="text-base font-medium text-indigo-600">
                           ${selectedActivity.price * participants}
                         </dd>
