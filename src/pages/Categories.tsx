@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { categories } from '../data/categories';
+import { Link } from "react-router-dom";
+import { categories } from "../data/categories";
 
 export default function Categories() {
   return (
@@ -17,7 +17,8 @@ export default function Categories() {
               Activity Categories
             </h2>
             <p className="mt-6 text-lg leading-8 text-gray-300">
-              Explore our diverse range of activities and find your perfect adventure
+              Explore our diverse range of activities and find your perfect
+              adventure
             </p>
           </div>
         </div>
@@ -41,8 +42,12 @@ export default function Categories() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/0" />
               </div>
               <div className="absolute bottom-0 p-6">
-                <h3 className="text-2xl font-bold text-white">{category.name}</h3>
-                <p className="mt-2 text-sm text-gray-200">{category.description}</p>
+                <h3 className="text-2xl font-bold text-white">
+                  {category.name}
+                </h3>
+                <p className="mt-2 text-sm text-gray-200">
+                  {category.description}
+                </p>
                 <div className="mt-4 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors duration-300 hover:bg-white/20">
                   Explore Activities
                 </div>

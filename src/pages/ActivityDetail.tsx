@@ -1,34 +1,16 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Users, Calendar } from "lucide-react";
+import { ArrowLeft, Users, Mail } from "lucide-react";
 import { activities } from "../data/activities";
 import { groundImages } from "../data/groundImages";
 import ImageCarousel from "../components/ImageCarousel";
-import { format } from "date-fns";
-
-const timeSlots = [
-  "09:00 AM",
-  "10:00 AM",
-  "11:00 AM",
-  "12:00 PM",
-  "01:00 PM",
-  "02:00 PM",
-  "03:00 PM",
-  "04:00 PM",
-  "05:00 PM",
-  "06:00 PM",
-  "07:00 PM",
-  "08:00 PM",
-];
 
 export default function ActivityDetail() {
   const { id } = useParams<{ id: string }>();
   const activity = activities.find((a) => a.id === id);
 
-  const [selectedDate, setSelectedDate] = useState(
-    format(new Date(), "yyyy-MM-dd")
-  );
-  const [selectedTime, setSelectedTime] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [participants, setParticipants] = useState(1);
   const [showBookingSuccess, setShowBookingSuccess] = useState(false);
 
@@ -208,51 +190,51 @@ export default function ActivityDetail() {
               <div className="rounded-lg bg-white p-6 shadow-lg">
                 <h3 className="text-xl font-bold text-gray-900">Book Now</h3>
 
-                {/* Date Selection */}
+                {/* Name Input */}
                 <div className="mt-6">
                   <label
-                    htmlFor="date"
+                    htmlFor="name"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Select Date
+                    Name
                   </label>
                   <div className="mt-1 flex rounded-md shadow-sm">
-                    <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500">
-                      <Calendar className="h-5 w-5" />
+                    <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500">
+                      <Users className="h-5 w-5" />
                     </span>
                     <input
-                      type="date"
-                      id="date"
-                      name="date"
-                      value={selectedDate}
-                      onChange={(e) => setSelectedDate(e.target.value)}
-                      min={format(new Date(), "yyyy-MM-dd")}
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       className="block w-full rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       required
                     />
                   </div>
                 </div>
 
-                {/* Time Selection */}
+                {/* Email Input */}
                 <div className="mt-6">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Select Time
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Email
                   </label>
-                  <div className="mt-2 grid grid-cols-3 gap-2">
-                    {timeSlots.map((time) => (
-                      <button
-                        key={time}
-                        type="button"
-                        onClick={() => setSelectedTime(time)}
-                        className={`flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium ${
-                          selectedTime === time
-                            ? "bg-indigo-600 text-white"
-                            : "bg-white text-gray-900 hover:bg-gray-50"
-                        } border border-gray-300`}
-                      >
-                        {time}
-                      </button>
-                    ))}
+                  <div className="mt-1 flex rounded-md shadow-sm">
+                    <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500">
+                      <Mail className="h-5 w-5" />
+                    </span>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="block w-full rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
                   </div>
                 </div>
 
@@ -266,7 +248,7 @@ export default function ActivityDetail() {
                     {activity.category === "social" ? "Guests" : "Participants"}
                   </label>
                   <div className="mt-1 flex rounded-md shadow-sm">
-                    <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500">
+                    <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500">
                       <Users className="h-5 w-5" />
                     </span>
                     <input
@@ -311,8 +293,7 @@ export default function ActivityDetail() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={!selectedDate || !selectedTime}
-                  className="mt-6 w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-gray-300"
+                  className="mt-6 w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Complete Booking
                 </button>

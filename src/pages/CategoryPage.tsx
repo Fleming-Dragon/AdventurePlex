@@ -1,7 +1,7 @@
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { categories } from '../data/categories';
-import { activities } from '../data/activities';
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { categories } from "../data/categories";
+import { activities } from "../data/activities";
 
 export default function CategoryPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -12,7 +12,9 @@ export default function CategoryPage() {
     return (
       <div className="min-h-screen bg-gray-50 px-4 py-16 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900">Category not found</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+            Category not found
+          </h2>
         </div>
       </div>
     );
@@ -55,8 +57,12 @@ export default function CategoryPage() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900">{activity.name}</h3>
-                <p className="mt-2 text-sm text-gray-500">{activity.description}</p>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {activity.name}
+                </h3>
+                <p className="mt-2 text-sm text-gray-500">
+                  {activity.description}
+                </p>
                 <dl className="mt-4 grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <dt className="font-medium text-gray-500">Duration</dt>
@@ -68,7 +74,9 @@ export default function CategoryPage() {
                   </div>
                   <div>
                     <dt className="font-medium text-gray-500">Group Size</dt>
-                    <dd className="text-gray-900">Up to {activity.maxParticipants}</dd>
+                    <dd className="text-gray-900">
+                      Up to {activity.maxParticipants}
+                    </dd>
                   </div>
                   <div>
                     <dt className="font-medium text-gray-500">Price</dt>

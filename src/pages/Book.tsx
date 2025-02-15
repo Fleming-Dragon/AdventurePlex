@@ -1,37 +1,12 @@
 import { useState } from "react";
-import { format } from "date-fns";
 import { Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { activities } from "../data/activities";
 import { categories } from "../data/categories";
-import type { Activity } from "../types";
-
-const timeSlots = [
-  "09:00 AM",
-  "10:00 AM",
-  "11:00 AM",
-  "12:00 PM",
-  "01:00 PM",
-  "02:00 PM",
-  "03:00 PM",
-  "04:00 PM",
-  "05:00 PM",
-  "06:00 PM",
-  "07:00 PM",
-  "08:00 PM",
-];
 
 export default function Book() {
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
-    null
-  );
-  const [selectedDate, setSelectedDate] = useState<string>(
-    format(new Date(), "yyyy-MM-dd")
-  );
-  const [selectedTime, setSelectedTime] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [participants, setParticipants] = useState(1);
 
   const filteredActivities = activities.filter((activity) => {
     const matchesSearch =
@@ -42,23 +17,6 @@ export default function Book() {
       : true;
     return matchesSearch && matchesCategory;
   });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedActivity) return;
-
-    const booking = {
-      activity: selectedActivity,
-      date: selectedDate,
-      time: selectedTime,
-      participants,
-      totalPrice: selectedActivity.price * participants,
-    };
-
-    // Handle booking submission
-    console.log("Booking:", booking);
-    alert("Booking submitted successfully!");
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -123,191 +81,40 @@ export default function Book() {
 
           {/* Activity Selection */}
           <div className="lg:w-3/4">
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredActivities.map((activity) => (
-                  <div
-                    key={activity.id}
-                    className={`cursor-pointer rounded-lg border-2 bg-white p-4 ${
-                      selectedActivity?.id === activity.id
-                        ? "border-indigo-600 bg-indigo-50"
-                        : "border-gray-200 hover:border-indigo-200"
-                    }`}
-                  >
-                    <Link to={`/activity/${activity.id}`} className="block">
-                      <img
-                        src={activity.image}
-                        alt={activity.name}
-                        className="h-32 w-full rounded-lg object-cover"
-                      />
-                      <h3 className="mt-4 text-lg font-medium text-gray-900">
-                        {activity.name}
-                      </h3>
-                      <p className="mt-1 text-sm text-gray-500">
-                        {activity.description}
-                      </p>
-                      <dl className="mt-4 grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <dt className="font-medium text-gray-500">
-                            Duration
-                          </dt>
-                          <dd className="text-gray-900">
-                            {activity.duration} min
-                          </dd>
-                        </div>
-                        <div>
-                          <dt className="font-medium text-gray-500">Price</dt>
-                          <dd className="text-gray-900">${activity.price}</dd>
-                        </div>
-                      </dl>
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedActivity(activity)}
-                      className="mt-4 w-full rounded-md bg-indigo-50 px-3.5 py-2 text-sm font-semibold text-indigo-600 hover:bg-indigo-100"
-                    >
-                      Select for Booking
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              {selectedActivity && (
-                <>
-                  {/* Date and Time Selection */}
-                  <div className="grid gap-8 sm:grid-cols-2">
-                    {/* Date Selection */}
-                    <div>
-                      <label
-                        htmlFor="date"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Select Date
-                      </label>
-                      <input
-                        type="date"
-                        id="date"
-                        name="date"
-                        value={selectedDate}
-                        onChange={(e) => setSelectedDate(e.target.value)}
-                        min={format(new Date(), "yyyy-MM-dd")}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        required
-                      />
-                    </div>
-
-                    {/* Participants */}
-                    <div>
-                      <label
-                        htmlFor="participants"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Number of Participants
-                      </label>
-                      <input
-                        type="number"
-                        id="participants"
-                        name="participants"
-                        value={participants}
-                        onChange={(e) =>
-                          setParticipants(
-                            Math.max(
-                              1,
-                              Math.min(
-                                parseInt(e.target.value) || 1,
-                                selectedActivity.maxParticipants
-                              )
-                            )
-                          )
-                        }
-                        min="1"
-                        max={selectedActivity.maxParticipants}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        required
-                      />
-                      <p className="mt-1 text-sm text-gray-500">
-                        Max {selectedActivity.maxParticipants} participants
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Time Slots */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Select Time
-                    </label>
-                    <div className="mt-4 grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6">
-                      {timeSlots.map((time) => (
-                        <button
-                          key={time}
-                          type="button"
-                          onClick={() => setSelectedTime(time)}
-                          className={`rounded-md px-3 py-2 text-sm font-semibold ${
-                            selectedTime === time
-                              ? "bg-indigo-600 text-white"
-                              : "bg-white text-gray-900 hover:bg-gray-50"
-                          } shadow-sm ring-1 ring-inset ring-gray-300`}
-                        >
-                          {time}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Booking Summary */}
-                  <div className="rounded-lg bg-gray-50 p-6">
-                    <h3 className="text-lg font-medium text-gray-900">
-                      Booking Summary
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredActivities.map((activity) => (
+                <div
+                  key={activity.id}
+                  className="cursor-pointer rounded-lg border-2 bg-white p-4 border-gray-200 hover:border-indigo-200"
+                >
+                  <Link to={`/activity/${activity.id}`} className="block">
+                    <img
+                      src={activity.image}
+                      alt={activity.name}
+                      className="h-32 w-full rounded-lg object-cover"
+                    />
+                    <h3 className="mt-4 text-lg font-medium text-gray-900">
+                      {activity.name}
                     </h3>
-                    <dl className="mt-4 space-y-4">
-                      <div className="flex justify-between">
-                        <dt className="text-sm text-gray-600">Activity</dt>
-                        <dd className="text-sm font-medium text-gray-900">
-                          {selectedActivity.name}
+                    <p className="mt-1 text-sm text-gray-500">
+                      {activity.description}
+                    </p>
+                    <dl className="mt-4 grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <dt className="font-medium text-gray-500">Duration</dt>
+                        <dd className="text-gray-900">
+                          {activity.duration} min
                         </dd>
                       </div>
-                      <div className="flex justify-between">
-                        <dt className="text-sm text-gray-600">Date</dt>
-                        <dd className="text-sm font-medium text-gray-900">
-                          {selectedDate}
-                        </dd>
-                      </div>
-                      <div className="flex justify-between">
-                        <dt className="text-sm text-gray-600">Time</dt>
-                        <dd className="text-sm font-medium text-gray-900">
-                          {selectedTime}
-                        </dd>
-                      </div>
-                      <div className="flex justify-between">
-                        <dt className="text-sm text-gray-600">Participants</dt>
-                        <dd className="text-sm font-medium text-gray-900">
-                          {participants}
-                        </dd>
-                      </div>
-                      <div className="flex justify-between border-t border-gray-200 pt-4">
-                        <dt className="text-base font-medium text-gray-900">
-                          Total Price
-                        </dt>
-                        <dd className="text-base font-medium text-indigo-600">
-                          ${selectedActivity.price * participants}
-                        </dd>
+                      <div>
+                        <dt className="font-medium text-gray-500">Price</dt>
+                        <dd className="text-gray-900">${activity.price}</dd>
                       </div>
                     </dl>
-                  </div>
-
-                  {/* Submit Button */}
-                  <div>
-                    <button
-                      type="submit"
-                      disabled={!selectedDate || !selectedTime}
-                      className="w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-gray-300"
-                    >
-                      Complete Booking
-                    </button>
-                  </div>
-                </>
-              )}
-            </form>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { MapPin, Phone, Mail } from 'lucide-react';
+import { useState } from "react";
+import { MapPin, Phone, Mail } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
-    alert('Message sent successfully!');
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    alert("Message sent successfully!");
+    setFormData({ name: "", email: "", phone: "", message: "" });
   };
 
   const handleChange = (
@@ -33,7 +33,8 @@ export default function Contact() {
             </h2>
             <div className="mt-3">
               <p className="text-lg text-gray-500">
-                Have questions about our facilities or services? We're here to help!
+                Have questions about our facilities or services? We're here to
+                help!
               </p>
             </div>
             <div className="mt-9">
@@ -55,7 +56,10 @@ export default function Contact() {
               </div>
               <div className="mt-6 flex">
                 <div className="flex-shrink-0">
-                  <MapPin className="h-6 w-6 text-gray-400" aria-hidden="true" />
+                  <MapPin
+                    className="h-6 w-6 text-gray-400"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div className="ml-3 text-base text-gray-500">
                   <p>123 Sports Avenue</p>
