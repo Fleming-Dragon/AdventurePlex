@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const navigation = [
-  { name: "Home", href: "/" },
+  { name: "Home", href: "/home" },
   { name: "Categories", href: "/categories" },
   { name: "Book Now", href: "/book" },
   { name: "About", href: "/about" },
