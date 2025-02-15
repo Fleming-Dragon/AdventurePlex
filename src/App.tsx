@@ -8,6 +8,8 @@ import Book from "./pages/Book";
 import ActivityDetail from "./pages/ActivityDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Signin from "./pages/Signin";
+import SignUp from "./pages/Signup";
 
 function App() {
   return (
@@ -16,13 +18,16 @@ function App() {
         <Navbar />
         <main className="flex-grow">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Signin />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/category/:slug" element={<CategoryPage />} />
             <Route path="/book" element={<Book />} />
             <Route path="/activity/:id" element={<ActivityDetail />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<SignUp />} />
           </Routes>
         </main>
         <Footer />

@@ -1,6 +1,6 @@
 import { Menu, X, Activity, UserCircle } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -14,6 +14,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <header className="bg-white shadow-sm">
@@ -80,6 +81,7 @@ export default function Navbar() {
                     onClick={() => {
                       setProfileMenuOpen(false);
                       // Add logout logic here
+                      navigate("/signin");
                     }}
                   >
                     Sign out
@@ -149,6 +151,7 @@ export default function Navbar() {
                   onClick={() => {
                     setMobileMenuOpen(false);
                     // Add logout logic here
+                    navigate("/signin");
                   }}
                 >
                   Sign out
