@@ -1,6 +1,7 @@
-import { Activity, Facebook, Instagram, Twitter } from "lucide-react";
+import { Facebook, Instagram, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
 import { categories } from "../data/categories";
+import logo from "../assets/booking buddy.png";
 
 export default function Footer() {
   return (
@@ -12,8 +13,7 @@ export default function Footer() {
               to="/"
               className="flex items-center space-x-2 text-2xl font-bold text-indigo-600"
             >
-              <Activity className="h-8 w-8" />
-              <span>AdventurePlex</span>
+              <img src={logo} alt="Booking Buddy" className="h-36" />
             </Link>
             <p className="text-gray-500 text-sm">
               Your ultimate destination for sports, adventure, and

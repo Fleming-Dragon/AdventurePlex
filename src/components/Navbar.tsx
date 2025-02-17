@@ -1,6 +1,7 @@
-import { Menu, X, Activity, UserCircle } from "lucide-react";
+import { Menu, X, UserCircle } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../assets/booking buddy.png";
 
 const navigation = [
   { name: "Home", href: "/home" },
@@ -25,8 +26,7 @@ export default function Navbar() {
               to="/"
               className="flex items-center space-x-2 text-2xl font-bold text-indigo-600"
             >
-              <Activity className="h-8 w-8" />
-              <span>AdventurePlex</span>
+              <img src={logo} alt="Booking Buddy" className="h-32 " />
             </Link>
           </div>
           <div className="hidden md:flex md:items-center md:space-x-6">
