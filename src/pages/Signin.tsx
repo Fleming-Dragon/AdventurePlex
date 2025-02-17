@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Activity } from "lucide-react";
+import logo from "../assets/booking buddy.png";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -18,10 +18,7 @@ export default function SignIn() {
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <Link to="/" className="flex items-center justify-center space-x-2">
-            <Activity className="h-10 w-10 text-indigo-600" />
-            <span className="text-2xl font-bold text-indigo-600">
-              AdventurePlex
-            </span>
+            <img src={logo} alt="Booking Buddy" className="h-32 " />
           </Link>
           <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
